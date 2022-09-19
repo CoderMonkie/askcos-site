@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ASKCOS Homepage{% endblock %}
+
+{% block page_title %}ASKCOS：有机合成软件工具{% endblock %}
+
+{% block extrahead %}
+<script src="{% static 'js/browser-compat.js' %}?v{{ static_version }}"></script>
+<script src="{% static 'js/vue.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/drawing.css' %}?v{{ static_version }}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/tooltip.css' %}?v{{ static_version }}" type="text/css">
+{% endblock %}
+
+{% block navbar_items %}{% endblock %}
+
+{% block sidebar_items %}{% endblock %}
+
+{% block page_body %}
+<p>
+   欢迎来到 ASKCOS 网站！在这里，我们托管了许多计算工具来协助合成规划和有机化学的其他方面。这些在左侧菜单栏中的“模块”选项卡中列出和描述。请记住，此服务由固定数量的计算资源支持。如果站点上还有其他几个用户也在执行计算量大的请求，您的请求可能需要比预期更长的时间。
+</p>
+
+{% include "launchpad.html" %}
+
+<p>
+
+
+    这项工作始于 DARPA Make-It 计划 (ARO W911NF-16-2-0023)，并继续得到 <a href="http://mlpds.mit.edu" target="_blank">药物发现和合成机器学习联盟</a>的支持。此处列出的出版物中描述了<a href="http://mlpds.mit.edu/papers/" target="_blank">几个已部署的模型</a>
+</p>
+
+
+<p><small>
+    本软件按“原样”提供，不提供任何明示或默示的保证，包括但不限于对适销性和特定用途适用性的默示保证。在任何情况下，对于任何直接、间接、偶然、特殊、惩戒性或后果性损害（包括但不限于采购替代商品或服务；使用、数据或利润损失；或业务中断），无论是由何种责任理论引起的，无论是合同、严格责任或侵权（包括疏忽或其他）以任何方式使用本软件引起的，即使已被告知存在此类损害的可能性。
+</small></p>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/launchpad.js' %}?v{{ static_version }}"></script>
+{% endblock %}

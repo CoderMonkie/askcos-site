@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title %}Synthesis Predictor{% endblock %}
 
@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block page_title %}
-Forward Synthesis Planner
+正向合成规划器
 {% endblock %}
 
 {% block page_body %}
@@ -167,24 +167,25 @@ Forward Synthesis Planner
         <div class="col-12">
             <div class="arrow-step-wrapper">
                 <div class="arrow-steps clearfix">
+
                     <div id="contextArrowStep" class="step" :class="{current: mode=='context'}" for="contextMode" @click="changeMode('context')">
-                        <span> Condition recommendation </span>
+                        <span>条件预测 </span>
                     </div>
 
                     <div id="forwardArrowStep" class="step" :class="{current: mode=='forward'}" for="forwardMode" @click="changeMode('forward')">
-                        <span> Synthesis prediction </span>
+                        <span>合成预测</span>
                     </div>
 
                     <div id="impurityArrowStep" class="step" :class="{current: mode=='impurity'}" for="impurityMode" @click="changeMode('impurity')">
-                        <span> Impurity prediction </span>
+                        <span>杂质预测</span>
                     </div>
 
                     <div id="regioselectivityArrowStep" class="step" :class="{current: mode=='selectivity'}" for="selectivityMode" @click="changeMode('selectivity')">
-                        <span> Regio-selectivity prediction </span>
+                        <span> 区域选择预测</span>
                     </div>
 
                     <div id="siteSelectivityArrowStep" class="step" :class="{current: mode=='sites'}" for="sitesMode" @click="changeMode('sites')">
-                        <span> Site selectivity prediction </span>
+                        <span> 芳烃位点选择预测 </span>
                     </div>
                     <div style="display:inline-block;margin: 10px 20px; float: right;">
                         <button id="settings-btn" class="btn btn-outline-dark" @click="showSettings = !showSettings" title="Settings" style="margin-left: 5px"><i class="fas fa-cog"></i></button>
@@ -198,11 +199,11 @@ Forward Synthesis Planner
     <div v-show="mode === 'context'" class="card border-info mb-3">
         <div class="card-body">
             <p class="card-text"><em>
-                Predict reagents, catalysts, solvents and temperature for a desired transformation using a neural network model.
+               使用神经网络模型预测所需转化的试剂、催化剂、溶剂和温度
                 <a href="https://doi.org/10.1021/acscentsci.8b00357">(ACS Cent. Sci., 2018, 4, 1465-1476)</a>
             </em></p>
             <p class="card-text">
-                <b>New in 2021.01:</b> Quantitative condition predictions now available using neural network v2 model. Select in settings menu.
+                <b>2021.01:</b> 现在可以使用神经网络 v2 模型进行定量条件预测。在设置菜单中选择。
             </p>
         </div>
     </div>
@@ -216,7 +217,7 @@ Forward Synthesis Planner
     <div v-show="mode === 'forward'" class="card border-info mb-3">
         <div class="card-body">
             <p class="card-text"><em>
-                Predict most likely outcomes of a chemical reaction using a template-free WLN model for predicting likely bond changes.
+                使用无模板 WLN 模型预测化学反应的最可能结果，以预测可能的键变化
                 <a href="https://doi.org/10.1039/C8SC04228D">(Chem. Sci., 2019, 10, 370-377)</a>
             </em></p>
         </div>
@@ -224,14 +225,14 @@ Forward Synthesis Planner
     <div v-show="mode === 'impurity'" class="card border-info mb-3">
         <div class="card-body">
             <p class="card-text"><em>
-                Predict likely impurities for a chemical reaction. Considers minor products, over-reaction, dimerization, solvent adducts, and subsets of reactants.
+                预测化学反应的可能杂质。考虑次要产物、过度反应、二聚化、溶剂加合物和反应物子集
             </em></p>
         </div>
     </div>
     <div v-show="mode === 'selectivity'" class="card border-info mb-3">
         <div class="card-body">
             <p class="card-text"><em>
-                Predict selectivity of regio-selective reactions. The QM-GNN model combines a WLN graph encoding with predicted quantum descriptors as input to a multitask neural network.
+                预测区域选择性反应的选择性。 QM-GNN 模型将 WLN 图编码与预测的量子描述符作为多任务神经网络的输入相结合
                 <a href="https://chemrxiv.org/s/a59c768f5b60d4ad19f9">(ChemRxiv 2020)</a>
             </em></p>
         </div>
@@ -239,7 +240,7 @@ Forward Synthesis Planner
     <div v-show="mode === 'sites'" class="card border-info mb-3">
         <div class="card-body">
             <p class="card-text"><em>
-                Predict site selectivity of aromatic C-H functionalization reactions with a multitask neural network that uses a WLN graph encoding.
+                使用 WLN 图编码的多任务神经网络预测芳香族 C-H 官能化反应的位点选择性
                 <a href="https://doi.org/10.1039/D0RE00071J">(React. Chem. Eng., 2020, 5, 896-902)</a>
             </em></p>
         </div>
@@ -248,7 +249,7 @@ Forward Synthesis Planner
     <form v-on:submit.prevent="predict" autocomplete="off">
         <div class="row my-3 justify-content-center">
             <div class="col-md-3">
-                <label for="reactants">Reactants:</label>
+                <label for="reactants">反应物:</label>
                 <div class="input-group">
                     <input class='form-control' type="text" v-model="reactants" id="reactants"/>
                     <div class='input-group-append'>
@@ -259,7 +260,7 @@ Forward Synthesis Planner
                 </div>
             </div>
             <div class="col-md-3">
-                <label for="product">Product:</label>
+                <label for="product">产品:</label>
                 <div class="input-group">
                     <input class='form-control' type="text" v-model="product" :disabled="mode === 'forward' || mode === 'sites'" id="product"/>
                     <div class='input-group-append'>
@@ -277,7 +278,7 @@ Forward Synthesis Planner
 
         <div class="row my-3 justify-content-center" v-show="mode !== 'context' && mode !== 'sites' ">
             <div class="col-md-3">
-                <label for="reagents">Reagents:</label>
+                <label for="reagents">试剂:</label>
                 <div class="input-group">
                     <input class='form-control' type="text" v-model="reagents" :disabled="mode=='context'" id="reagents"/>
                     <div class='input-group-append'>
@@ -292,7 +293,7 @@ Forward Synthesis Planner
             </div>
 
             <div class="col-md-3">
-                <label for="solvent">Solvent:</label>
+                <label for="solvent">溶剂:</label>
                 <div class="input-group">
                     <input class='form-control' type="text" v-model="solvent" :disabled="mode=='context'" id="solvent"/>
                     <div class='input-group-append'>
@@ -307,7 +308,7 @@ Forward Synthesis Planner
             </div>
         </div>
         <div class="text-center my-3">
-            <button id="submit-button" type="submit" class='btn btn-success'>Submit</button>
+            <button id="submit-button" type="submit" class='btn btn-success'>提交</button>
         </div>
     </form>
 
@@ -496,7 +497,7 @@ Forward Synthesis Planner
 
     <div v-show="mode=='impurity'">
         <div class="my-3">
-            Progress: %% impurityProgress.message %%
+            进度: %% impurityProgress.message %%
         </div>
         <div class="progress my-3">
             <div class="progress-bar" role="progressbar" :style="{ width: 100*impurityProgress.percent+'%'}" :aria-valuenow="100*impurityProgress.percent" aria-valuemin="0" aria-valuemax="100"></div>
@@ -504,7 +505,7 @@ Forward Synthesis Planner
         <div v-show="!!impurityResults.length" class="text-right my-3">
             <button class="btn btn-outline-dark" @click="downloadImpurityResults">
                 <i class="fas fa-download"></i>
-                Export Results
+                导出结果
             </button>
         </div>
         <table v-show="!!impurityResults.length" class="table table-hover my-3">

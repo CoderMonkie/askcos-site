@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block page_title %}Login{% endblock %}
+{% block page_title %}登录{% endblock %}
 
 {% block page_body %}
 <form method="post" action=".">
   {% csrf_token %}
   {{ form.as_p }}
 
-  <input type="submit" value="{% trans 'Log in' %}" />
+  <input type="submit" value="{% trans '登录' %}" />
   <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
 <br>
 {% if email_enabled %}
-<p><a href="{% url 'auth_password_reset' %}">{% trans "Forgot my password" %}</a></p>
+<p><a href="{% url 'auth_password_reset' %}">{% trans "忘记密码" %}</a></p>
 {% endif %}
-<p><a href="{% url 'django_registration_register' %}">{% trans "Register" %}</a></p>
+<p><a href="{% url 'django_registration_register' %}">{% trans "注册" %}</a></p>
 {% endblock %}

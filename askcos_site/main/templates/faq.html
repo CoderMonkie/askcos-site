@@ -8,24 +8,24 @@
 
 {% block sidebar_items %}{% endblock %}
 
-{% block page_title %}FAQ{% endblock %}
+{% block page_title %}常见问题{% endblock %}
 
 
 {% block page_body %}
 
 <!-- <h1>Temporarily under construction - some modules may not work</h1>
  -->
- <h3>Why can't I find any pathways to my target?</h3>
- <p>Retrosynthetic suggestions are proposed, fundamentally, by templates we have generalized from reaction precedents. For some products, e.g., natural products, there may be one very specific reaction step that is highly substrate- or scaffold-specific. Such a reaction template would have very few (if any) similar precedents, and so the program was not able to successfully generalize to this target.</p>
- <p>When using the relevance template prioritizer, it's important to note that we do not apply all of the templates in our library (to save on computational time). That means that even if an obscure template would perform well, we may not apply it to the target because it does not appear relevant. You can return to the one-step retrosynthesis module and instead chose to apply <i>all</i> templates to see if this is the case.
+ <h3>为什么我找不到任何通往目标的途径？</h3>
+ <p>从根本上说，逆合成建议是通过我们从反应先例中概括出来的模板提出的。对于某些产品，例如天然产品，可能有一个非常特定的反应步骤，它具有高度的底物或支架特异性。这样的反应模板几乎没有（如果有的话）类似的先例，因此该程序无法成功推广到该目标。</p>
+ <p>当使用相关模板优先级时，重要的是要注意我们不会应用我们库中的所有模板（以节省计算时间）。这意味着即使一个不起眼的模板表现良好，我们也可能不会将其应用于目标，因为它看起来不相关。您可以返回一步逆合成模块，而是选择应用所有模板来查看是否是这种情况。
 
- <h3>Why doesn't the program find the known literature route to my target?</h3>
- <p>Our primary data source is currently Reaxys, so we are somewhat at the mercy of the quality/inclusivity of their database. There are many known reactions that are <i>not</i> in their database, despite their best efforts to maximize its coverage. Moreover, when you search for a pathway, we do not try to find exact literature precedents, even if there is a record for that exact target compound and a full pathway is known.</p>
- <p>That may sound counterintuitive, but what we are trying to do is generalize known chemistry to new substrates (and eventually, to new chemistry). Reaxys provides the standard search/lookup tool for known targets, so we are purposefully avoiding replicating their functionality. We do report the number of times a chemical appears as a reactant or product in the database, which can serve as an indication that it is worth searching Reaxys or SciFinder for an exact match.</p>
+ <h3>为什么程序没有找到我的目标的已知文献路径？</h3>
+ <p>我们的主要数据源目前是 Reaxys，因此我们在某种程度上受制于他们数据库的质量/包容性。尽管他们尽最大努力将其覆盖范围最大化，但仍有许多已知反应不在他们的数据库中。此外，当您搜索途径时，我们不会尝试找到确切的文献先例，即使有该确切目标化合物的记录并且已知完整途径也是如此。</p>
+ <p>这听起来可能违反直觉，但我们正在尝试做的是将已知化学推广到新的底物（并最终推广到新的化学）。 Reaxys 为已知目标提供标准搜索/查找工具，因此我们有意避免复制它们的功能。我们确实报告了一种化学物质在数据库中作为反应物或产物出现的次数，这表明值得在 Reaxys 或 SciFinder 中搜索精确匹配。</p>
 
- <h3>Why do I get an error message when trying to run an expansion?</h3>
- <p>There are a limited number of workers available to perform computationally-intensive tasks. There is a chance that other users were running expansions at the same time, so no available pool of workers was found. Often, restarting the page and submitting the request again is sufficient to correct the problem. In rare cases, these workers may run into an error state and refuse to accept incoming requests, at which time they will be restarted. If you keep running into issues, please <a href="mailto:{{ contact_email }}?subject=Problem with the askcos website">send us a note</a>.</p>
+ <h3>为什么我在尝试运行扩展时会收到错误消息？</h3>
+ <p>可用于执行计算密集型任务的工作人员数量有限。有可能其他用户同时在运行扩展，因此找不到可用的工作池。通常，重新启动页面并再次提交请求就足以解决问题。在极少数情况下，这些工作人员可能会遇到错误状态并拒绝接受传入的请求，此时它们将重新启动。如果您一直遇到问题， <a href="mailto:{{ contact_email }}?subject=Problem with the askcos website">请给我们发送说明。</a></p>
 
-<h3>The routes I'm seeing are all very similar</h3>
-<p>We are thinking about ways to quantify diversity so we can show a broader range of suggestions. In the meantime, there is still the ability to <i>hide all</i> chemicals or reactions in the tree builder tool. When looking at a result, holding the mouse over a chemical or reaction node will raise a popup box that lets you (a) ban that reaction or chemical, in which case it will not be used in future pathways, or (b) hide all occurrences of that chemical or reaction, which minimizes all pathways it appears in.</p>
+<h3>我看到的路线都非常相似</h3>
+<p>我们正在考虑量化多样性的方法，以便我们可以提出更广泛的建议。同时，仍然可以在树生成器工具中隐藏所有化学物质或反应。查看结果时，将鼠标悬停在化学或反应节点上会弹出一个弹出框，让您 (a) 禁止该反应或化学，在这种情况下，它将不会在未来的路径中使用，或 (b) 隐藏所有该化学物质或反应的发生，从而最大限度地减少它出现的所有途径</p>
 {% endblock %}

@@ -8,7 +8,7 @@
 
 {% block sidebar_items %}{% endblock %}
 
-{% block page_title %}Available modules{% endblock %}
+{% block page_title %}可用模块{% endblock %}
 
 {% block page_body %}
 
@@ -18,20 +18,17 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'retro_network' %}">Interactive Path Planning and Tree Builder</a>
+                <a href="{% url 'retro_network' %}">交互式路径规划和树生成器</a>
             </h3>
             <p class="card-text lead">
-                Interactive tool for manually and automatically exploring retrosynthesis predictions
+                用于手动和自动探索逆合成预测的交互式工具
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module allows you to build a retrosynthetic tree by combining multiple one-step retrosynthesis
-                predictions. The interface also offers the ability to start automatic tree generation jobs using MCTS
-                tree search algorithms combined with the same one-step retrosynthetic predictions.
+                此模块允许您通过组合多个单步逆合成预测来构建逆合成树。该界面还提供了使用 MCTS 树搜索算法结合相同的一步逆合成预测来启动自动树生成作业的能力
             </p>
             <p class="card-text">
-                The current one-step retrosynthesis model is template-based, using a neural network to predict the most
-                relevant retrosynthetic templates for a given target molecule.
+                当前的一步逆合成模型是基于模板的，使用神经网络预测给定目标分子最相关的逆合成模板
                 (<a href="https://doi.org/10.1002/chem.201605499" target="_blank">Chem. Eur. J. 2017, 23, 25, 5966-5971</a>,
                 <a href="https://doi.org/10.1021/acs.jcim.0c00403" target="_blank">J. Chem. Inf. Model. 2020, 60, 7, 3398–3407</a>)
             </p>
@@ -43,14 +40,14 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'synth_interactive' %}?mode=forward">Forward Synthesis Predictor</a>
+                <a href="{% url 'synth_interactive' %}?mode=forward">正向合成规划器</a>
             </h3>
             <p class="card-text lead">
-                Evaluate a reaction in the forward direction, considering reaction conditions and impurities
+                评估正向反应，考虑反应条件和杂质
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module allows you to predict most likely outcomes of a chemical reaction using a template-free WLN model trained to predict likely bond changes.
+                该模块允许您使用经过训练以预测可能的键变化的无模板 WLN 模型来预测化学反应的最可能结果
                 (<a href="https://doi.org/10.1039/C8SC04228D" target="_blank">Chem. Sci., 2019, 10, 370-377</a>)
             </p>
         </div>
@@ -61,18 +58,18 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'synth_interactive' %}?mode=context">Reaction Condition Recommender</a>
+                <a href="{% url 'synth_interactive' %}?mode=context">反应条件推荐器</a>
             </h3>
             <p class="card-text lead">
-                Predict reaction conditions for a given reaction
+                预测给定反应的反应条件
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module allows you to predict reagents, catalysts, solvents and temperature for a desired transformation using a neural network model.
+                该模块允许您使用神经网络模型预测所需转化的试剂、催化剂、溶剂和温度
                 (<a href="https://doi.org/10.1021/acscentsci.8b00357" target="_blank">ACS Cent. Sci., 2018, 4, 1465-1476</a>)
             </p>
             <p class="card-text">
-                The 2021.01 release adds a new version of the model which can provide quantitative condition predictions.
+                2021.01 版本增加了一个新版本的模型，可以提供定量的条件预测
             </p>
         </div>
     </div>
@@ -82,16 +79,14 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'synth_interactive' %}?mode=impurity">Reaction Impurity Prediction</a>
+                <a href="{% url 'synth_interactive' %}?mode=impurity">反应杂质预测</a>
             </h3>
             <p class="card-text lead">
-                Predict likely reaction impurities
+                预测可能的反应杂质
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module allows you to predict likely impurities for a chemical reaction. The algorithm considers
-                minor products, over-reaction, dimerization, solvent adducts, and subsets of reactants. It relies on the
-                template-free forward prediction model.
+                该模块允许您预测化学反应中可能存在的杂质。该算法考虑了次要产物、过度反应、二聚化、溶剂加合物和反应物子集。它依赖于无模板前向预测模型
                 (<a href="https://doi.org/10.1039/C8SC04228D" target="_blank">Chem. Sci., 2019, 10, 370-377</a>)
             </p>
         </div>
@@ -102,15 +97,14 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'synth_interactive' %}?mode=selectivity">Universal Regioselectivity Prediction</a>
+                <a href="{% url 'synth_interactive' %}?mode=selectivity">通用区域选择性预测</a>
             </h3>
             <p class="card-text lead">
-                Predict selectivity of regio-selective reactions
+                预测区域选择性反应的选择性
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module allows you to predict selectivity of regio-selective reactions. The QM-GNN model combines
-                a WLN graph encoding with predicted quantum descriptors as input to a multitask neural network.
+                该模块允许您预测区域选择性反应的选择性。 QM-GNN 模型将 WLN 图编码与预测的量子描述符作为多任务神经网络的输入相结合
                 (<a href="https://chemrxiv.org/s/a59c768f5b60d4ad19f9" target="_blank">ChemRxiv 2020</a>)
             </p>
         </div>
@@ -121,14 +115,14 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'synth_interactive' %}?mode=sites">Aromatic C-H Site Selectivity Prediction</a>
+                <a href="{% url 'synth_interactive' %}?mode=sites">芳烃 C-H 位点选择性预测</a>
             </h3>
             <p class="card-text lead">
-                Predict reactive aromatic C-H sites
+                预测反应性芳族 C-H 位点
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module allows you to predict site selectivity of 123 aromatic C-H functionalization reactions with a multitask neural network that uses a WLN graph encoding.
+                该模块允许您使用使用 WLN 图编码的多任务神经网络预测 123 个芳族 C-H 官能化反应的位点选择性
                 (<a href="https://doi.org/10.1039/D0RE00071J" target="_blank">React. Chem. Eng., 2020, 5, 896-902</a>)
             </p>
         </div>
@@ -139,21 +133,18 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'index' %}">SCScore Evaluator</a>
+                <a href="{% url 'index' %}">SCScore 评估者</a>
             </h3>
             <p class="card-text lead">
-                Analyze a chemical's perceived synthetic complexity
+                分析化学品的感知合成复杂性
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module is a utility to evaluate the SCScore (a learned synthetic complexity metric) for arbitrary
-                target chemicals. The model was trained on reactions in Reaxys in an attempt to understand the nuance
-                of synthetic complexity, e.g., when protections and deprotections are constructive. It is designed to
-                perceive a monotonic increase in complexity throughout a linear synthesis.
+               该模块是一个实用程序，用于评估任意目标化学品的 SCScore（一种学习的合成复杂性指标）。该模型在 Reaxys 中针对反应​​进行了训练，以试图了解合成复杂性的细微差别，例如，当保护和去保护具有建设性时。它旨在感知整个线性合成中复杂性的单调增加
                 (<a href="https://doi.org/10.1021/acs.jcim.7b00622" target="_blank">J. Chem. Inf. Model. 2018, 58, 2, 252-261</a>)
             </p>
             <p class="card-text">
-                Search for a molecule SMILES on the homepage to evaluate its SCScore.
+                在主页上搜索分子 SMILES 以评估其 SCScore
             </p>
         </div>
     </div>
@@ -163,20 +154,17 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'buyables' %}">Buyable Look-up</a>
+                <a href="{% url 'buyables' %}">查找购买</a>
             </h3>
             <p class="card-text lead">
-                Check to see if a chemical is in the buyables database
+               检查化学品是否在可购买的数据库中
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module is a utility to check if a certain compound is included in the building block database.
-                By default, the database includes approximately 280,000 database entries from eMolecules, LabNetwork,
-                and Sigma Aldrich with prices up to $100 per gram.
+                此模块是一个实用程序，用于检查某个化合物是否包含在构建块数据库中。默认情况下，该数据库包含来自 eMolecules、LabNetwork 和 Sigma Aldrich 的大约 280,000 个数据库条目，价格高达每克 100 美元
             </p>
             <p class="card-text">
-                Users can also add custom building blocks to the database, which will be reflected in the Interactive
-                Path Planner and Tree Builder modules.
+               用户还可以将自定义构建块添加到数据库中，这将反映在 Interactive Path Planner 和 Tree Builder 模块中。
             </p>
         </div>
     </div>
@@ -186,56 +174,31 @@
     <div class="card-body">
         <div class="card-body">
             <h3 class="card-title">
-                <a href="{% url 'index' %}">Atom Mapping</a>
+                <a href="{% url 'index' %}">原子映射</a>
             </h3>
             <p class="card-text lead">
-                Generate atom mapping for a reaction SMILES
+               为反应 SMILES 生成原子映射
             </p>
             <hr class="my-3">
             <p class="card-text">
-                This module provides a utility for generating atom mappings for reactions. Currently, there are two
-                models available: a WLN atom mapper using the template-free forward prediction model,
+                该模块提供了一个用于生成反应原子映射的实用程序。目前，有两种模型可用： 使用无模板前向预测模型的 WLN 原子映射器
                 (<a href="https://doi.org/10.1039/C8SC04228D" target="_blank">Chem. Sci., 2019, 10, 370-377</a>)
-                and the RXNMapper transformer model.
+               和RXNMapper 变压器模型
                 (<a href="http://dx.doi.org/10.26434/chemrxiv.12298559" target="_blank">ChemRxiv 2020</a>)
             </p>
             <p class="card-text">
-                Search for a reaction SMILES on the homepage to generate an atom mapping.
+                在首页搜索一个反应 SMILES 生成一个原子映射。
             </p>
         </div>
     </div>
 </div>
 
-<div class="card">
-    <div class="card-body">
-        <div class="card-body">
-            <h3 class="card-title">
-                <a href="{% url 'draw' %}">Drawing</a>
-            </h3>
-            <p class="card-text lead">
-                Draw molecules, reactions, or templates from SMILES/SMARTS strings
-            </p>
-            <hr class="my-3">
-            <p class="card-text">
-                This module is a utility to draw SMILES strings describing chemicals, reactions, or SMARTS strings
-                describing templates. Note that you can also copy a SMILES string and "Paste special" in Chemdraw
-                (highly recommended), although this does not work very well for templates.
-            </p>
-        </div>
-    </div>
-</div>
+
 
 </div>
 
 <p><small>
-    THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-    REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-    PROFITS; OR BUSINESS INTERRUPTION)
-    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
-    OF SUCH DAMAGE.
+    本软件按“原样”提供，不提供任何明示或默示的保证，包括但不限于对适销性和特定用途适用性的默示保证。在任何情况下，对于任何直接、间接、偶然、特殊、惩戒性或后果性损害（包括但不限于采购替代商品或服务；使用、数据或利润损失；或业务中断），无论是由何种责任理论引起的，无论是合同、严格责任或侵权（包括疏忽或其他）以任何方式使用本软件引起的，即使已被告知存在此类损害的可能性。
 </small></p>
 
 {% endblock %}

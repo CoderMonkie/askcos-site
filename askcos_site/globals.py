@@ -43,7 +43,7 @@ RETRO_CHIRAL_FOOTNOTE = 'Using {} chiral retrosynthesis templates from {}/{}'.fo
 
 ################################################################################
 # Pricer
-pricer = Pricer()
+pricer = Pricer(use_db=False)
 pricer.load()
 print('Loaded global pricer.')
 

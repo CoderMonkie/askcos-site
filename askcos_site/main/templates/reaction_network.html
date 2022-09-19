@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title %}Interactive Path Planning{% endblock %}
 {% block extrahead %}
@@ -23,7 +23,7 @@
 <script src="{% static 'js/uuidv4-8.3.0.min.js' %}"></script>
 {% endblock %}
 
-{% block page_title %}Interactive Path Planning{% endblock %}
+{% block page_title %}交互式路径规划{% endblock %}
 
 {% block page_body %}
 
@@ -107,7 +107,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="text-center mb-3">
-                                <h3>Current Target</h3>
+                                <h3>当前目标</h3>
                                 <img :src=`/api/v2/draw/?&smiles=${encodeURIComponent(selected.smiles)}`>
                             </div>
                             <div class="btn-toolbar justify-content-center mb-3">
@@ -854,7 +854,7 @@ It is roughly how long it will take for results to be returned, however there is
                     <form class="form-inline" autocomplete="off" v-on:submit.prevent="changeTarget">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Target</span>
+                                <span class="input-group-text">目标</span>
                                 <button v-if="enableResolve" class="input-group-text" type="button" @click="toggleResolver">
                                     <i v-if="allowResolve" style="color: darkgreen" class="fas fa-server" title="Connection to NIH name resolver is ON, structures may be sent to an external service. This can be turned off in the settings menu, or by clicking this icon."></i>
                                     <i v-else style="color: darkred" class="fas fa-server" title="Connection to NIH name resolver is OFF, structures will NOT be sent to an external service. Target query must be a SMILES string. This can be turned on in the settings menu, or by clicking this icon."></i>
@@ -951,7 +951,7 @@ It is roughly how long it will take for results to be returned, however there is
 
                 </div>
                 <div id="details" class="col-md-5 text-center details">
-                    <h3>Currently selected:</h3>
+                    <h3>当前选择:</h3>
 
                     <template v-if="selected">
                         <template v-if="selected.type=='chemical'">
@@ -1194,7 +1194,7 @@ It is roughly how long it will take for results to be returned, however there is
                         </template>
                     </template>
                     <template v-else>
-                        Select a node from the graph to the left to see more detailed information.
+                       从左侧图表中选择一个节点以查看更多详细信息
                     </template>
                 </div>
             </div>

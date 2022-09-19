@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load static %}
 {% block title %}
     Buyable Compounds
 {% endblock %}
@@ -10,7 +10,7 @@
 
 {% endblock %}
 {% block page_title %}
-    Buyable Compounds
+    可购买的化合物
 {% endblock %}
 {% block page_body %}
 
@@ -98,10 +98,7 @@
     <div class="row">
         <div class="col">
             <em>
-                The chemicals and prices stored in our database are taken from Reaxys and are originally from
-                eMolecules, LabNetwork, or Sigma Aldrich. All compounds with an average price per gram listed at $100 or
-                lower were included. Please note that prices in the database are unfortunately rounded to the nearest
-                integer. That is, the cheapest compounds are still listed as $1/g.
+                我们数据库中存储的化学品和价格取自 Reaxys，最初来自 eMolecules、LabNetwork 或 Sigma Aldrich。包括每克平均价格为 100 美元或更低的所有化合物。请注意，数据库中的价格不幸地被四舍五入到最接近的整数。也就是说，最便宜的化合物仍以 1 美元/克的价格列出。
             </em>
         </div>
     </div>
@@ -114,22 +111,22 @@
                     <input class='form-control' type="text" id="searchSmiles" v-model="searchSmilesQuery"/>
                 </div>
                 <div class="form-group mx-2">
-                    <label class="mr-1" for="searchSource">Source:</label>
+                    <label class="mr-1" for="searchSource">来源:</label>
                     <input class='form-control' type="text" id="searchSource" v-model="searchSourceQuery"/>
                 </div>
                 <div class="form-group mx-2">
-                    <label class="mr-1" for="searchLimit">Limit results:</label>
+                    <label class="mr-1" for="searchLimit">限制结果:</label>
                     <input id="searchLimit" class="form-control text-center" type='number' v-model="searchLimit" min="1" max="1000" step="1" value="100">
                 </div>
                 <div class="form-check-inline mx-2">
                     <input class="form-check-input" id="canonSmiles" type='checkbox' v-model="canonSmiles">
-                    <label class="form-check-label" for="canonSmiles">Canonicalize SMILES</label>
+                    <label class="form-check-label" for="canonSmiles">规范化 SMILES</label>
                 </div>
                 <div class="form-check-inline mx-2">
                     <input class="form-check-input" id="searchRegex" type='checkbox' v-model="searchRegex">
-                    <label class="form-check-label" for="searchRegex">Use regular expression</label>
+                    <label class="form-check-label" for="searchRegex">使用正则表达式</label>
                 </div>
-                <button type="submit" class='btn btn-primary'>Search</button>
+                <button type="submit" class='btn btn-primary'>搜索</button>
             </form>
         </div>
     </div>
@@ -150,8 +147,8 @@
         <thead>
             <tr>
                 <th style="width: 55%;" class="text-center">SMILES</th>
-                <th style="width: 20%;" class="text-center">Price ($/g)</th>
-                <th style="width: 20%;" class="text-center">Source</th>
+                <th style="width: 20%;" class="text-center">价格 ($/g)</th>
+                <th style="width: 20%;" class="text-center">来源</th>
                 {% if can_modify_buyables %}
                 <th style="width: 5%;"></th>
                 {% endif %}

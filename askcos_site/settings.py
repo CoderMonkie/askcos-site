@@ -17,9 +17,9 @@ BASE_DIR = os.path.dirname(PROJECT_PATH)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'notsosecret'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', False)
+DEBUG = os.getenv('DJANGO_DEBUG', True)
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['*']
 if os.environ.get('CURRENT_HOST'):
     ALLOWED_HOSTS.append(os.environ.get('CURRENT_HOST'))
 
@@ -92,14 +92,22 @@ DEFAULT_FROM_EMAIL = 'no-reply@askcos.mit.edu'
 
 # Where are user settings / banlists / etc. saved?
 # NOTE: we recommend relocating the db to an ssd for speed
-DATABASES = {'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': os.getenv('MYSQL_DATABASE', 'askcos_db'),
-    'USER': os.getenv('MYSQL_USER', 'root'),
-    'PASSWORD': os.getenv('MYSQL_ROOT_PASSWORD', 'password'),
-    'HOST': os.getenv('MYSQL_HOST', 'mysql'),
-    'PORT': '3306',
-}}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR + '/db.sqlite3',
+    }
+
+#     'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': os.getenv('MYSQL_DATABASE', 'askcos_db'),
+#     'USER': os.getenv('MYSQL_USER', 'root'),
+#     'PASSWORD': os.getenv('MYSQL_ROOT_PASSWORD', 'password'),
+#     'HOST': os.getenv('MYSQL_HOST', 'mysql'),
+#     'PORT': '3306',
+# }
+
+}
 
 # django rest framework settings
 REST_FRAMEWORK = {

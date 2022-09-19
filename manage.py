@@ -2,6 +2,10 @@
 import os
 import sys
 
+cwd = os.path.abspath(__file__)
+sys.path.append("/tmp/pycharm_project_270/askcos-core")
+
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "askcos_site.settings")
 
