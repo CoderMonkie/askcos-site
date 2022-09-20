@@ -164,9 +164,9 @@
     </transition>
 
     <div class="row mb-3">
-        <div class="col-12">
+        <div class="col-2">
             <div class="arrow-step-wrapper">
-                <div class="arrow-steps clearfix">
+                <div class="arrow-steps clearfix" style="display: flex; flex-direction: column">
 
                     <div id="contextArrowStep" class="step" :class="{current: mode=='context'}" for="contextMode" @click="changeMode('context')">
                         <span>条件预测 </span>
@@ -194,374 +194,378 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div v-show="mode === 'context'" class="card border-info mb-3">
-        <div class="card-body">
-            <p class="card-text"><em>
-               使用神经网络模型预测所需转化的试剂、催化剂、溶剂和温度
-                <a href="https://doi.org/10.1021/acscentsci.8b00357">(ACS Cent. Sci., 2018, 4, 1465-1476)</a>
-            </em></p>
-            <p class="card-text">
-                <b>2021.01:</b> 现在可以使用神经网络 v2 模型进行定量条件预测。在设置菜单中选择。
-            </p>
-        </div>
-    </div>
-    <div v-show="mode === 'context' && contextModel === 'neuralnetworkv2' && contextV2ModelType === 'graph'" class="card border-warning mb-3">
-        <div class="card-body">
-            <p class="card-text">
-                Graph models require atom-mapped reactions. If atom-mapping is not available, please try the fingerprint models instead.
-            </p>
-        </div>
-    </div>
-    <div v-show="mode === 'forward'" class="card border-info mb-3">
-        <div class="card-body">
-            <p class="card-text"><em>
-                使用无模板 WLN 模型预测化学反应的最可能结果，以预测可能的键变化
-                <a href="https://doi.org/10.1039/C8SC04228D">(Chem. Sci., 2019, 10, 370-377)</a>
-            </em></p>
-        </div>
-   </div>
-    <div v-show="mode === 'impurity'" class="card border-info mb-3">
-        <div class="card-body">
-            <p class="card-text"><em>
-                预测化学反应的可能杂质。考虑次要产物、过度反应、二聚化、溶剂加合物和反应物子集
-            </em></p>
-        </div>
-    </div>
-    <div v-show="mode === 'selectivity'" class="card border-info mb-3">
-        <div class="card-body">
-            <p class="card-text"><em>
-                预测区域选择性反应的选择性。 QM-GNN 模型将 WLN 图编码与预测的量子描述符作为多任务神经网络的输入相结合
-                <a href="https://chemrxiv.org/s/a59c768f5b60d4ad19f9">(ChemRxiv 2020)</a>
-            </em></p>
-        </div>
-    </div>
-    <div v-show="mode === 'sites'" class="card border-info mb-3">
-        <div class="card-body">
-            <p class="card-text"><em>
-                使用 WLN 图编码的多任务神经网络预测芳香族 C-H 官能化反应的位点选择性
-                <a href="https://doi.org/10.1039/D0RE00071J">(React. Chem. Eng., 2020, 5, 896-902)</a>
-            </em></p>
-        </div>
-    </div>
+        <div class="col-10">
 
-    <form v-on:submit.prevent="predict" autocomplete="off">
-        <div class="row my-3 justify-content-center">
-            <div class="col-md-3">
-                <label for="reactants">反应物:</label>
-                <div class="input-group">
-                    <input class='form-control' type="text" v-model="reactants" id="reactants"/>
-                    <div class='input-group-append'>
-                        <button id="reactants-edit-icon" class='input-group-text' data-toggle="modal" data-target="#drawingbox" @click="drawBoxKetcher('reactants')" type="button">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
+            <div v-show="mode === 'context'" class="card border-info mb-3">
+                <div class="card-body">
+                    <p class="card-text"><em>
+                       使用神经网络模型预测所需转化的试剂、催化剂、溶剂和温度
+                        <a href="https://doi.org/10.1021/acscentsci.8b00357">(ACS Cent. Sci., 2018, 4, 1465-1476)</a>
+                    </em></p>
+                    <p class="card-text">
+                        <b>2021.01:</b> 现在可以使用神经网络 v2 模型进行定量条件预测。在设置菜单中选择。
+                    </p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <label for="product">产品:</label>
-                <div class="input-group">
-                    <input class='form-control' type="text" v-model="product" :disabled="mode === 'forward' || mode === 'sites'" id="product"/>
-                    <div class='input-group-append'>
-                        <button class='input-group-text' data-toggle="modal" data-target="#drawingbox" @click="drawBoxKetcher('product')" :disabled="mode === 'forward' || mode === 'sites'" type="button">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
+            <div v-show="mode === 'context' && contextModel === 'neuralnetworkv2' && contextV2ModelType === 'graph'" class="card border-warning mb-3">
+                <div class="card-body">
+                    <p class="card-text">
+                        Graph models require atom-mapped reactions. If atom-mapping is not available, please try the fingerprint models instead.
+                    </p>
                 </div>
             </div>
-        </div>
-
-        <div v-if="!!reactants" class="row my-3 justify-content-center">
-            <img class ="hide-broken" :src='"/api/v2/draw/?smiles="+encodeURIComponent(reactants)+"%3E%3E"+encodeURIComponent(product)'/>
-        </div>
-
-        <div class="row my-3 justify-content-center" v-show="mode !== 'context' && mode !== 'sites' ">
-            <div class="col-md-3">
-                <label for="reagents">试剂:</label>
-                <div class="input-group">
-                    <input class='form-control' type="text" v-model="reagents" :disabled="mode=='context'" id="reagents"/>
-                    <div class='input-group-append'>
-                        <button class='input-group-text' data-toggle="modal" data-target="#drawingbox" @click="drawBoxKetcher('reagents')" :disabled="mode=='context'" type="button">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
+            <div v-show="mode === 'forward'" class="card border-info mb-3">
+                <div class="card-body">
+                    <p class="card-text"><em>
+                        使用无模板 WLN 模型预测化学反应的最可能结果，以预测可能的键变化
+                        <a href="https://doi.org/10.1039/C8SC04228D">(Chem. Sci., 2019, 10, 370-377)</a>
+                    </em></p>
                 </div>
-                <div v-if="!!reagents" class="text-center">
-                    <img class ="hide-broken" :src='"/api/v2/draw/?smiles="+encodeURIComponent(reagents)' :alt="reagents">
+           </div>
+            <div v-show="mode === 'impurity'" class="card border-info mb-3">
+                <div class="card-body">
+                    <p class="card-text"><em>
+                        预测化学反应的可能杂质。考虑次要产物、过度反应、二聚化、溶剂加合物和反应物子集
+                    </em></p>
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <label for="solvent">溶剂:</label>
-                <div class="input-group">
-                    <input class='form-control' type="text" v-model="solvent" :disabled="mode=='context'" id="solvent"/>
-                    <div class='input-group-append'>
-                        <button class='input-group-text' data-toggle="modal" data-target="#drawingbox" @click="drawBoxKetcher('solvent')" :disabled="mode=='context'" type="button">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
-                </div>
-                <div v-if="!!solvent" class="text-center">
-                    <img class ="hide-broken" :src='"/api/v2/draw/?smiles="+encodeURIComponent(solvent)' :alt="solvent">
+            <div v-show="mode === 'selectivity'" class="card border-info mb-3">
+                <div class="card-body">
+                    <p class="card-text"><em>
+                        预测区域选择性反应的选择性。 QM-GNN 模型将 WLN 图编码与预测的量子描述符作为多任务神经网络的输入相结合
+                        <a href="https://chemrxiv.org/s/a59c768f5b60d4ad19f9">(ChemRxiv 2020)</a>
+                    </em></p>
                 </div>
             </div>
+            <div v-show="mode === 'sites'" class="card border-info mb-3">
+                <div class="card-body">
+                    <p class="card-text"><em>
+                        使用 WLN 图编码的多任务神经网络预测芳香族 C-H 官能化反应的位点选择性
+                        <a href="https://doi.org/10.1039/D0RE00071J">(React. Chem. Eng., 2020, 5, 896-902)</a>
+                    </em></p>
+                </div>
+            </div>
+        
+            <form v-on:submit.prevent="predict" autocomplete="off">
+                <div class="row my-3 justify-content-center">
+                    <div class="col-md-3">
+                        <label for="reactants">反应物:</label>
+                        <div class="input-group">
+                            <input class='form-control' type="text" v-model="reactants" id="reactants"/>
+                            <div class='input-group-append'>
+                                <button id="reactants-edit-icon" class='input-group-text' data-toggle="modal" data-target="#drawingbox" @click="drawBoxKetcher('reactants')" type="button">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="product">产品:</label>
+                        <div class="input-group">
+                            <input class='form-control' type="text" v-model="product" :disabled="mode === 'forward' || mode === 'sites'" id="product"/>
+                            <div class='input-group-append'>
+                                <button class='input-group-text' data-toggle="modal" data-target="#drawingbox" @click="drawBoxKetcher('product')" :disabled="mode === 'forward' || mode === 'sites'" type="button">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div v-if="!!reactants" class="row my-3 justify-content-center">
+                    <img class ="hide-broken" :src='"/api/v2/draw/?smiles="+encodeURIComponent(reactants)+"%3E%3E"+encodeURIComponent(product)'/>
+                </div>
+        
+                <div class="row my-3 justify-content-center" v-show="mode !== 'context' && mode !== 'sites' ">
+                    <div class="col-md-3">
+                        <label for="reagents">试剂:</label>
+                        <div class="input-group">
+                            <input class='form-control' type="text" v-model="reagents" :disabled="mode=='context'" id="reagents"/>
+                            <div class='input-group-append'>
+                                <button class='input-group-text' data-toggle="modal" data-target="#drawingbox" @click="drawBoxKetcher('reagents')" :disabled="mode=='context'" type="button">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div v-if="!!reagents" class="text-center">
+                            <img class ="hide-broken" :src='"/api/v2/draw/?smiles="+encodeURIComponent(reagents)' :alt="reagents">
+                        </div>
+                    </div>
+        
+                    <div class="col-md-3">
+                        <label for="solvent">溶剂:</label>
+                        <div class="input-group">
+                            <input class='form-control' type="text" v-model="solvent" :disabled="mode=='context'" id="solvent"/>
+                            <div class='input-group-append'>
+                                <button class='input-group-text' data-toggle="modal" data-target="#drawingbox" @click="drawBoxKetcher('solvent')" :disabled="mode=='context'" type="button">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div v-if="!!solvent" class="text-center">
+                            <img class ="hide-broken" :src='"/api/v2/draw/?smiles="+encodeURIComponent(solvent)' :alt="solvent">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center my-3">
+                    <button id="submit-button" type="submit" class='btn btn-success'>提交</button>
+                </div>
+            </form>
+        
+            <div id="context-results" v-show="mode=='context' && !!contextResults.length">
+                <div class="text-center my-3">
+                    <button class="btn btn-info" @click="evaluate" :disabled="evaluating==true">Evaluate reaction(s)</button>
+                </div>
+                <div v-if="!!reactionScore" class="text-center my-3">
+                    <b>Reaction score: %% reactionScore.toFixed(3) %%</b>
+                    <i class="fas fa-info-circle" title="The reaction score is determined by the reaction scoring prediction model specified by the user (currently only the fast filter model is supported)"></i>
+                </div>
+                <table class="table table-hover my-3" v-if="contextModel == 'neuralnetworkv2'">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Rank</th>
+                            <th class="text-center">Reactants (Amount)</th>
+                            <th class="text-center">Reagents (Amount)</th>
+                            <th class="text-center">Temperature</th>
+                            <th class="text-center">Predict with conditions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="(result, index) in contextResults">
+                            <tr>
+                                <td class="text-center">%% index+1 %%</td>
+                                <td class="text-center">
+                                    <span v-if="result.evaluating && result.evaluation === undefined">
+                                        <div class="spinner-border text-secondary" role="status"></div>
+                                    </span>
+                                    <span v-else-if="result.evaluation">
+                                        ✔ (rank: %% result.evaluation %%)
+                                    </span>
+                                    <span v-else-if="result.evaluation != undefined && !result.evaluation">
+                                        <i class="fas fa-times"></i> (rank: N/A)
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <template v-for="(amount, rct) in result.reactants">
+                                        <p><img :src='"/api/v2/draw/?smiles="+encodeURIComponent(rct)' :alt="rct"> (%% amount.toFixed(2) %%) </p>
+                                    </template>
+                                </td>
+                                <td class="text-center">
+                                    <template v-if="!!result.reagents">
+                                        <template v-for="(amount, rgt) in result.reagents">
+                                            <p><img :src='"/api/v2/draw/?smiles="+encodeURIComponent(rgt)' :alt="rgt"> (%% (amount > 0.01) ? amount.toFixed(2) : amount.toExponential(2) %%) </p>
+                                        </template>
+                                    </template>
+                                    <span v-else>none</span>
+                                </td>
+                                <td class="text-center">
+                                    %% Math.round(result.temperature) %% &deg;C
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-dark" @click="goToForward(index)" :id="'predict-conditions-'+index" title="Predict products"><i class="fas fa-arrow-right"></i></button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+        
+                <table class="table table-hover my-3" v-if="contextModel == 'neuralnetwork'">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Rank</th>
+                            <th class="text-center">Reagents</th>
+                            <th class="text-center">Catalyst</th>
+                            <th class="text-center">Solvents</th>
+                            <th class="text-center">Solvent Score <i title="Rates the Environment, Health, and Safety aspects of a solvent from 1 to 6, with 1 being most green and 6 being most hazardous. A score of 7 indicates no EHS information was available." class="fas fa-question-circle ml-1" style="cursor: pointer"></i></th>
+                            <th class="text-center">Temperature</th>
+                            <th class="text-center">Predict with conditions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="(result, index) in contextResults">
+                            <tr>
+                                <td class="text-center">%% index+1 %%</td>
+                                <td class="text-center">
+                                    <span v-if="result.evaluating && result.evaluation === undefined">
+                                        <div class="spinner-border text-secondary" role="status"></div>
+                                    </span>
+                                    <span v-else-if="result.evaluation">
+                                        ✔ (rank: %% result.evaluation %%)
+                                    </span>
+                                    <span v-else-if="result.evaluation != undefined && !result.evaluation">
+                                        <i class="fas fa-times"></i> (rank: N/A)
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <img v-if="!!result.reagent" :src='"/api/v2/draw/?smiles="+encodeURIComponent(result.reagent)' :alt="result.reagent">
+                                    <span v-else>none</span>
+                                </td>
+                                <td class="text-center">
+                                    <img v-if="!!result.catalyst" :src='"/api/v2/draw/?smiles="+encodeURIComponent(result.catalyst)' :alt="result.catalyst">
+                                    <span v-else>none</span>
+                                </td>
+                                <td class="text-center">
+                                    <img v-if="!!result.solvent" :src='"/api/v2/draw/?smiles="+encodeURIComponent(result.solvent)' :alt="result.solvent">
+                                    <span v-else>none</span>
+                                </td>
+                                <td class="text-center">
+                                    <p v-bind:style="{ color: solventScoreColorMap[result.solvent_score] || 'black' }">%% result.solvent_score %%</p>
+                                </td>
+                                <td class="text-center">
+                                    %% Math.round(result.temperature) %% &deg;C
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-dark" @click="goToForward(index)" :id="'predict-conditions-'+index" title="Predict products"><i class="fas fa-arrow-right"></i></button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        
+            <div id="forward-results" v-show="mode=='forward' && !!forwardResults.length">
+                <div class="text-right my-3">
+                    <button class="btn btn-outline-dark" @click="downloadForwardResults">
+                        <i class="fas fa-download"></i>
+                        Export Results
+                    </button>
+                </div>
+                <table class="table table-hover my-3">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Rank</th>
+                            <th class="text-center">Product</th>
+                            <th class="text-center">Probability</th>
+                            <th class="text-center">Max. Score</th>
+                            <th class="text-center">Molecular Weight</th>
+                            <th class="text-center">Predict impurities</th>
+                            <th class="text-center">Predict regio-selectivities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="(res, index) in forwardResults">
+                            <tr>
+                                <td class="text-center">%% res.rank %%</td>
+                                <td class="text-center">
+                                    <img :src='"/api/v2/draw/?smiles="+encodeURIComponent(res.smiles)' :alt="res.smiles">
+                                </td>
+                                <td class="text-center">%% (Math.round((res.prob + Number.EPSILON) * 10000) / 10000).toFixed(4) %%</td>
+                                <td class="text-center">%% (Math.round((res.score + Number.EPSILON) * 1000) / 1000).toFixed(3) %%</td>
+                                <td class="text-center">%% (Math.round((res.mol_wt + Number.EPSILON) * 10) / 10).toFixed(1) %%</td>
+                                <td class="text-center">
+                                    <button :id="'predict-impurities-' + index" class="btn btn-dark" @click="goToImpurity(res.smiles)" title="Predict impurities"><i class="fas fa-arrow-right"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button :id="'predict-regio-selectivities-' + index" class="btn btn-dark" @click="goToSelectivity(res.smiles)" title="Predict regio-selectivities"><i class="fas fa-arrow-right"></i></button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        
+            <div id="selectivity-results" v-show="mode=='selectivity'">
+                <div v-show="!!selectivityResults.length" class="text-right my-3">
+                    <button class="btn btn-outline-dark" @click="downloadSelectivityResults">
+                        <i class="fas fa-download"></i>
+                        Export Results
+                    </button>
+                </div>
+                <table v-show="!!selectivityResults.length" class="table table-hover my-3">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Rank</th>
+                            <th class="text-center">Product</th>
+                            <th class="text-center">Probability</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="(res, index) in selectivityResults">
+                            <tr>
+                                <td class="text-center">%% res.rank %%</td>
+                                <td class="text-center">
+                                    <img :src='"/api/v2/draw/?smiles="+encodeURIComponent(res.smiles)' :alt="res.smiles">
+                                </td>
+                                <td class="text-center">%% (Math.round((res.prob + Number.EPSILON) * 10000) / 10000).toFixed(4) %%</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        
+            <div v-show="mode=='impurity'">
+                <div class="my-3">
+                    进度: %% impurityProgress.message %%
+                </div>
+                <div class="progress my-3">
+                    <div class="progress-bar" role="progressbar" :style="{ width: 100*impurityProgress.percent+'%'}" :aria-valuenow="100*impurityProgress.percent" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div v-show="!!impurityResults.length" class="text-right my-3">
+                    <button class="btn btn-outline-dark" @click="downloadImpurityResults">
+                        <i class="fas fa-download"></i>
+                        导出结果
+                    </button>
+                </div>
+                <table v-show="!!impurityResults.length" class="table table-hover my-3">
+                    <thead>
+                        <tr>
+                            <th class="text-center">No. <a href="#" data-toggle="tooltip" data-container="body" title="Ranking is based on similarity between predicted impurity and major product."><span class="fas fa-info-circle"></span></a></th>
+                            <th class="text-center">Predicted impurities</th>
+                            <th class="text-center">Possible mechanisms</th>
+                            <th class="text-center">Inspector score</th>
+                            <th class="text-center">Similarity score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="(outcome, index) in impurityResults">
+                            <tr>
+                                <td class="text-center">%% outcome.no %%</td>
+                                <td class="text-center">
+                                    <img :src='"/api/v2/draw/?smiles="+encodeURIComponent(outcome.prd_smiles)' :alt="outcome.prd_smiles"><br>
+                                    <span class="smiles">%% outcome.prd_smiles %%</span>
+                                </td>
+                                <td class="text-center">%% outcome.modes_name %%</td>
+                                <td class="text-center">%% outcome.avg_insp_score.toFixed(3) %%</td>
+                                <td class="text-center">%% outcome.similarity_to_major.toFixed(3) %%</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        
+            <div id="site-results" v-show="mode === 'sites'">
+                <div v-show="!!siteResults.length" class="form-inline my-3">
+                    <i title="Filter reactants based on substring match to SMILES. Supports regular expressions."
+                        class="fas fa-question-circle mr-1" style="cursor: pointer"></i>
+                    <label class="mr-2" for="sitesQuery">Filter Reactants:</label>
+                    <input class='form-control' type="text" v-model="siteResultsQuery" id="sitesQuery" style="width: 20rem"/>
+                </div>
+                <table v-show="!!siteResults.length" class="table table-hover my-3">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Reactant</th>
+                            <th class="text-center">Sites</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="res in siteResultsFilter">
+                            <tr>
+                                <td class="text-center">
+                                    <img :src="getMolImgUrl(res.task, true)" :alt="res.task" loading="lazy">
+                                </td>
+                                <td class="text-center">
+                                    <img :src="getMolImgUrl(res.smiles, true, res.atom_scores)" :alt="res.smiles" loading="lazy">
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        
         </div>
-        <div class="text-center my-3">
-            <button id="submit-button" type="submit" class='btn btn-success'>提交</button>
-        </div>
-    </form>
-
-    <div id="context-results" v-show="mode=='context' && !!contextResults.length">
-        <div class="text-center my-3">
-            <button class="btn btn-info" @click="evaluate" :disabled="evaluating==true">Evaluate reaction(s)</button>
-        </div>
-        <div v-if="!!reactionScore" class="text-center my-3">
-            <b>Reaction score: %% reactionScore.toFixed(3) %%</b>
-            <i class="fas fa-info-circle" title="The reaction score is determined by the reaction scoring prediction model specified by the user (currently only the fast filter model is supported)"></i>
-        </div>
-        <table class="table table-hover my-3" v-if="contextModel == 'neuralnetworkv2'">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">Rank</th>
-                    <th class="text-center">Reactants (Amount)</th>
-                    <th class="text-center">Reagents (Amount)</th>
-                    <th class="text-center">Temperature</th>
-                    <th class="text-center">Predict with conditions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <template v-for="(result, index) in contextResults">
-                    <tr>
-                        <td class="text-center">%% index+1 %%</td>
-                        <td class="text-center">
-                            <span v-if="result.evaluating && result.evaluation === undefined">
-                                <div class="spinner-border text-secondary" role="status"></div>
-                            </span>
-                            <span v-else-if="result.evaluation">
-                                ✔ (rank: %% result.evaluation %%)
-                            </span>
-                            <span v-else-if="result.evaluation != undefined && !result.evaluation">
-                                <i class="fas fa-times"></i> (rank: N/A)
-                            </span>
-                        </td>
-                        <td class="text-center">
-                            <template v-for="(amount, rct) in result.reactants">
-                                <p><img :src='"/api/v2/draw/?smiles="+encodeURIComponent(rct)' :alt="rct"> (%% amount.toFixed(2) %%) </p>
-                            </template>
-                        </td>
-                        <td class="text-center">
-                            <template v-if="!!result.reagents">
-                                <template v-for="(amount, rgt) in result.reagents">
-                                    <p><img :src='"/api/v2/draw/?smiles="+encodeURIComponent(rgt)' :alt="rgt"> (%% (amount > 0.01) ? amount.toFixed(2) : amount.toExponential(2) %%) </p>
-                                </template>
-                            </template>
-                            <span v-else>none</span>
-                        </td>
-                        <td class="text-center">
-                            %% Math.round(result.temperature) %% &deg;C
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-dark" @click="goToForward(index)" :id="'predict-conditions-'+index" title="Predict products"><i class="fas fa-arrow-right"></i></button>
-                        </td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
-
-        <table class="table table-hover my-3" v-if="contextModel == 'neuralnetwork'">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">Rank</th>
-                    <th class="text-center">Reagents</th>
-                    <th class="text-center">Catalyst</th>
-                    <th class="text-center">Solvents</th>
-                    <th class="text-center">Solvent Score <i title="Rates the Environment, Health, and Safety aspects of a solvent from 1 to 6, with 1 being most green and 6 being most hazardous. A score of 7 indicates no EHS information was available." class="fas fa-question-circle ml-1" style="cursor: pointer"></i></th>
-                    <th class="text-center">Temperature</th>
-                    <th class="text-center">Predict with conditions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <template v-for="(result, index) in contextResults">
-                    <tr>
-                        <td class="text-center">%% index+1 %%</td>
-                        <td class="text-center">
-                            <span v-if="result.evaluating && result.evaluation === undefined">
-                                <div class="spinner-border text-secondary" role="status"></div>
-                            </span>
-                            <span v-else-if="result.evaluation">
-                                ✔ (rank: %% result.evaluation %%)
-                            </span>
-                            <span v-else-if="result.evaluation != undefined && !result.evaluation">
-                                <i class="fas fa-times"></i> (rank: N/A)
-                            </span>
-                        </td>
-                        <td class="text-center">
-                            <img v-if="!!result.reagent" :src='"/api/v2/draw/?smiles="+encodeURIComponent(result.reagent)' :alt="result.reagent">
-                            <span v-else>none</span>
-                        </td>
-                        <td class="text-center">
-                            <img v-if="!!result.catalyst" :src='"/api/v2/draw/?smiles="+encodeURIComponent(result.catalyst)' :alt="result.catalyst">
-                            <span v-else>none</span>
-                        </td>
-                        <td class="text-center">
-                            <img v-if="!!result.solvent" :src='"/api/v2/draw/?smiles="+encodeURIComponent(result.solvent)' :alt="result.solvent">
-                            <span v-else>none</span>
-                        </td>
-                        <td class="text-center">
-                            <p v-bind:style="{ color: solventScoreColorMap[result.solvent_score] || 'black' }">%% result.solvent_score %%</p>
-                        </td>
-                        <td class="text-center">
-                            %% Math.round(result.temperature) %% &deg;C
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-dark" @click="goToForward(index)" :id="'predict-conditions-'+index" title="Predict products"><i class="fas fa-arrow-right"></i></button>
-                        </td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="forward-results" v-show="mode=='forward' && !!forwardResults.length">
-        <div class="text-right my-3">
-            <button class="btn btn-outline-dark" @click="downloadForwardResults">
-                <i class="fas fa-download"></i>
-                Export Results
-            </button>
-        </div>
-        <table class="table table-hover my-3">
-            <thead>
-                <tr>
-                    <th class="text-center">Rank</th>
-                    <th class="text-center">Product</th>
-                    <th class="text-center">Probability</th>
-                    <th class="text-center">Max. Score</th>
-                    <th class="text-center">Molecular Weight</th>
-                    <th class="text-center">Predict impurities</th>
-                    <th class="text-center">Predict regio-selectivities</th>
-                </tr>
-            </thead>
-            <tbody>
-                <template v-for="(res, index) in forwardResults">
-                    <tr>
-                        <td class="text-center">%% res.rank %%</td>
-                        <td class="text-center">
-                            <img :src='"/api/v2/draw/?smiles="+encodeURIComponent(res.smiles)' :alt="res.smiles">
-                        </td>
-                        <td class="text-center">%% (Math.round((res.prob + Number.EPSILON) * 10000) / 10000).toFixed(4) %%</td>
-                        <td class="text-center">%% (Math.round((res.score + Number.EPSILON) * 1000) / 1000).toFixed(3) %%</td>
-                        <td class="text-center">%% (Math.round((res.mol_wt + Number.EPSILON) * 10) / 10).toFixed(1) %%</td>
-                        <td class="text-center">
-                            <button :id="'predict-impurities-' + index" class="btn btn-dark" @click="goToImpurity(res.smiles)" title="Predict impurities"><i class="fas fa-arrow-right"></i></button>
-                        </td>
-                        <td class="text-center">
-                            <button :id="'predict-regio-selectivities-' + index" class="btn btn-dark" @click="goToSelectivity(res.smiles)" title="Predict regio-selectivities"><i class="fas fa-arrow-right"></i></button>
-                        </td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="selectivity-results" v-show="mode=='selectivity'">
-        <div v-show="!!selectivityResults.length" class="text-right my-3">
-            <button class="btn btn-outline-dark" @click="downloadSelectivityResults">
-                <i class="fas fa-download"></i>
-                Export Results
-            </button>
-        </div>
-        <table v-show="!!selectivityResults.length" class="table table-hover my-3">
-            <thead>
-                <tr>
-                    <th class="text-center">Rank</th>
-                    <th class="text-center">Product</th>
-                    <th class="text-center">Probability</th>
-                </tr>
-            </thead>
-            <tbody>
-                <template v-for="(res, index) in selectivityResults">
-                    <tr>
-                        <td class="text-center">%% res.rank %%</td>
-                        <td class="text-center">
-                            <img :src='"/api/v2/draw/?smiles="+encodeURIComponent(res.smiles)' :alt="res.smiles">
-                        </td>
-                        <td class="text-center">%% (Math.round((res.prob + Number.EPSILON) * 10000) / 10000).toFixed(4) %%</td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
-    </div>
-
-    <div v-show="mode=='impurity'">
-        <div class="my-3">
-            进度: %% impurityProgress.message %%
-        </div>
-        <div class="progress my-3">
-            <div class="progress-bar" role="progressbar" :style="{ width: 100*impurityProgress.percent+'%'}" :aria-valuenow="100*impurityProgress.percent" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <div v-show="!!impurityResults.length" class="text-right my-3">
-            <button class="btn btn-outline-dark" @click="downloadImpurityResults">
-                <i class="fas fa-download"></i>
-                导出结果
-            </button>
-        </div>
-        <table v-show="!!impurityResults.length" class="table table-hover my-3">
-            <thead>
-                <tr>
-                    <th class="text-center">No. <a href="#" data-toggle="tooltip" data-container="body" title="Ranking is based on similarity between predicted impurity and major product."><span class="fas fa-info-circle"></span></a></th>
-                    <th class="text-center">Predicted impurities</th>
-                    <th class="text-center">Possible mechanisms</th>
-                    <th class="text-center">Inspector score</th>
-                    <th class="text-center">Similarity score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <template v-for="(outcome, index) in impurityResults">
-                    <tr>
-                        <td class="text-center">%% outcome.no %%</td>
-                        <td class="text-center">
-                            <img :src='"/api/v2/draw/?smiles="+encodeURIComponent(outcome.prd_smiles)' :alt="outcome.prd_smiles"><br>
-                            <span class="smiles">%% outcome.prd_smiles %%</span>
-                        </td>
-                        <td class="text-center">%% outcome.modes_name %%</td>
-                        <td class="text-center">%% outcome.avg_insp_score.toFixed(3) %%</td>
-                        <td class="text-center">%% outcome.similarity_to_major.toFixed(3) %%</td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="site-results" v-show="mode === 'sites'">
-        <div v-show="!!siteResults.length" class="form-inline my-3">
-            <i title="Filter reactants based on substring match to SMILES. Supports regular expressions."
-                class="fas fa-question-circle mr-1" style="cursor: pointer"></i>
-            <label class="mr-2" for="sitesQuery">Filter Reactants:</label>
-            <input class='form-control' type="text" v-model="siteResultsQuery" id="sitesQuery" style="width: 20rem"/>
-        </div>
-        <table v-show="!!siteResults.length" class="table table-hover my-3">
-            <thead>
-                <tr>
-                    <th class="text-center">Reactant</th>
-                    <th class="text-center">Sites</th>
-                </tr>
-            </thead>
-            <tbody>
-                <template v-for="res in siteResultsFilter">
-                    <tr>
-                        <td class="text-center">
-                            <img :src="getMolImgUrl(res.task, true)" :alt="res.task" loading="lazy">
-                        </td>
-                        <td class="text-center">
-                            <img :src="getMolImgUrl(res.smiles, true, res.atom_scores)" :alt="res.smiles" loading="lazy">
-                        </td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
     </div>
 
     <a id="downloadForwardAnchorElem" style="display:none"></a>

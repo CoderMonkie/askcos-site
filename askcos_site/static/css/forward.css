@@ -36,7 +36,8 @@
 
 .arrow-steps .step.current {
 	color: #fff;
-	background-color: #696c74;
+	/* background-color: #696c74; */
+	background-color: #28a745;
 }
 
 .arrow-steps .step.current:after {
