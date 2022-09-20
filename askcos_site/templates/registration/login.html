@@ -6,19 +6,21 @@
 {% block page_body %}
 
 <div class="w-100 d-flex justify-content-center">
-    <form method="post" action=".">
-      {% csrf_token %}
-      {{ form.as_p }}
+    <div>
+        <form method="post" action=".">
+          {% csrf_token %}
+          {{ form.as_p }}
 
-      <input type="submit" value="{% trans '登录' %}" />
-      <input type="hidden" name="next" value="{{ next }}" />
-    </form>
+          <input type="submit" value="{% trans '登录' %}" />
+          <input type="hidden" name="next" value="{{ next }}" />
+        </form>
 
-    <br>
-    {% if email_enabled %}
-    <p><a href="{% url 'auth_password_reset' %}">{% trans "忘记密码" %}</a></p>
-    {% endif %}
-    <p><a href="{% url 'django_registration_register' %}">{% trans "注册" %}</a></p>
+        <br>
+        {% if email_enabled %}
+        <p><a href="{% url 'auth_password_reset' %}">{% trans "忘记密码" %}</a></p>
+        {% endif %}
+        <p class=""><a href="{% url 'django_registration_register' %}">{% trans "注册" %}</a></p>
+    </div>
 </div>
 
 {% endblock %}
