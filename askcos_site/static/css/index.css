@@ -1,0 +1,7 @@
+/** base.html use css*/
+html {
+    height: 100vh;
+}
+.collapsed .fa-chevron-up {
+    transform: rotate(180deg);
+}

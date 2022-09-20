@@ -1,0 +1,75 @@
+<nav class="sidebar sidebar-main" id="sidebar">
+    <ul class="nav flex-column">
+      <div class="dropdown-divider"></div>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#Retrosynthesis" aria-expanded="true" aria-controls="Retrosynthesis">
+          <i class="fas fa-bong menu-icon"></i>
+          <span class="menu-title">逆合成</span>
+          <i class="fas fa-chevron-up"></i>
+        </a>
+        <div class="collapse show" id="Retrosynthesis" style="">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item active" data-route="retro_network"> 
+              <a class="nav-link active" href="{% url 'retro_network' %}">交互式路径规划</a>
+            </li>
+            <li class="nav-item" data-route="retro_interactive_mcts">
+              <a class="nav-link" href="{% url 'retro_interactive_mcts' %}">树构建器</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <div class="dropdown-divider"></div>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#ForwardSynthesis" aria-expanded="true" aria-controls="ForwardSynthesis">
+          <i class="fas fa-bong menu-icon"></i>
+          <span class="menu-title">正向合成</span>
+          <i class="fas fa-chevron-up"></i>
+        </a>
+        <div class="collapse show" id="ForwardSynthesis" style="">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item" data-route="/synth_interactive/?mode=context">
+              <a class="nav-link" href="{% url 'synth_interactive' %}?mode=context">条件预测</a>
+            </li>
+            <li class="nav-item" data-route="/synth_interactive/?mode=forward">
+              <a class="nav-link" href="{% url 'synth_interactive' %}?mode=forward">合成预测</a>
+            </li>
+            <li class="nav-item" data-route="/synth_interactive/?mode=impurity">
+              <a class="nav-link active" href="{% url 'synth_interactive' %}?mode=impurity">杂质预测</a>
+            </li>
+            <li class="nav-item" data-route="/synth_interactive/?mode=selectivity">
+              <a class="nav-link" href="{% url 'synth_interactive' %}?mode=selectivity">区域选择预测</a>
+            </li>
+            <li class="nav-item" data-route="/synth_interactive/?mode=sites">
+              <a class="nav-link" href="{% url 'synth_interactive' %}?mode=sites">芳烃位点选择预测</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <div class="dropdown-divider"></div>
+      
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#Utilities" aria-expanded="true" aria-controls="Utilities">
+          <i class="fas fa-weight-hanging menu-icon"></i>
+          <span class="menu-title">实用程序</span>
+          <i class="fas fa-chevron-up"></i>
+        </a>
+        <div class="collapse show" id="Utilities" style="">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item" data-route="/buyables/">
+              <a class="nav-link" href="{% url 'buyables' %}">查找购买</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <div class="dropdown-divider"></div>
+
+      <!-- <li class="nav-item">        
+        {% if user.is_authenticated %}
+        <a class="nav-link" href="{% url 'my_results' %}"><span class="fa fa-cloud mr-1"></span>My Results</a>
+        <a class="nav-link" href="{% url 'user_banlist' %}"><span class="fa fa-ban mr-1"></span>My Banlist</a>
+        {% endif %}
+      </li> -->
+    </ul>
+  </nav>
+
+            

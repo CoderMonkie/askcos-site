@@ -14,6 +14,7 @@
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <!-- Our CSS (overrides) -->
+    <link href="{% static 'css/index.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'css/default.css' %}?v{{ static_version }}" rel="stylesheet" type="text/css"/>
     <script src="{% static 'js/default.js' %}?v{{ static_version }}"></script>
     <script src="{% static 'js/dayjs.min.js' %}"></script>
@@ -22,10 +23,10 @@
     {% block extrahead %}{% endblock %}
 </head>
 
-<body>
+<body class="h-100">
 {% csrf_token %}
 
-<div id="document">
+<div id="document" class="h-100">
 
     <nav class="navbar navbar-expand-lg navbar-dark nfixed-top" style="background-color: #0547AF;">
 
@@ -106,78 +107,33 @@
         </div>
     </nav>
 
-<div class="container-fluid">
-  <div class="row">
-       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column nav-pills">
-          <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" style="font-size: 1.2rem" href="#" id="modulesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="fas fa-th-large mr-1" ></span>模块
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="modulesDropdown">
-                        <!--<a class="dropdown-item" href="{% url 'modules' %}">概述</a>-->
-                        <div class="dropdown-divider"></div>
-                        <h5 class="dropdown-header"><b>逆合成</b></h5>
-                        <a class="dropdown-item" href="{% url 'retro_network' %}">交互式路径规划</a>
-                        <a class="dropdown-item" href="{% url 'retro_interactive_mcts' %}">树构建器</a>
-                        <div class="dropdown-divider"></div>
-                        <h5 class="dropdown-header"><b>正向合成</b></h5>
-                        <a class="dropdown-item" href="{% url 'synth_interactive' %}?mode=context">条件预测</a>
-                        <a class="dropdown-item" href="{% url 'synth_interactive' %}?mode=forward">合成预测</a>
-                        <a class="dropdown-item" href="{% url 'synth_interactive' %}?mode=impurity">杂质预测</a>
-                        <a class="dropdown-item" href="{% url 'synth_interactive' %}?mode=selectivity">区域选择预测</a>
-                        <a class="dropdown-item" href="{% url 'synth_interactive' %}?mode=sites">芳烃位点选择预测</a>
-                        <div class="dropdown-divider"></div>
-                        <h5 class="dropdown-header"><b>实用程序</b></h5>
-                        <a class="dropdown-item" href="{% url 'buyables' %}">查找购买</a>
-                        <!-- <a class="dropdown-item" href="{% url 'draw' %}">Drawing</a>-->
-                    </div>
-                </li>
-                <!--<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" style="font-size: 1.2rem" href="#" id="helpDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="fa fa-question-circle mr-1"></span>帮助
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="helpDropdown">
-                        <a class="dropdown-item" href="{% url 'faq' %}">常见问题</a>
-                        <a class="dropdown-item" href="{% url 'tutorial' %}">指导</a>
-                    </div>
-                </li>-->
-
-                {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'my_results' %}"><span class="fa fa-cloud mr-1"></span>My Results</a></li>
-
-                <li class="nav-item"><a class="nav-link" href="{% url 'user_banlist' %}"><span class="fa fa-ban mr-1"></span>My Banlist</a></li>
-                {% endif %}
-        </ul>
-
-    </div>
-    </nav>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-           <div class=" mb-5">
-            {% if err or warn %}
-            <div class="my-3">
-                {% if err %}
-                <div class="alert alert-danger">{{ err | safe}}</div>
-                {% endif %}
-                {% if warn %}
-                <div class="alert alert-warning">{{ warn | safe}}</div>
-                {% endif %}
-            </div>
-            {% endif %}
-
-            <div id="contents">
-                <div class="mt-5 mb-3 pb-3 border-bottom"><h1>{% block page_title %}ASKCOS{% endblock %}</h1></div>
-                {% block page_body %}Looks like there is nothing here!{% endblock %}
-            </div>
-
+    <div class="h-100 row">
+        <div class="col-2 px-5 bg-light">          
+            {% include 'sidebar.html' %}
         </div>
-        </main>
-
-  </div>
-</div>
-
-
+        <div class="col-9">
+          <main role="main" class="">
+            <div class=" mb-5">
+             {% if err or warn %}
+             <div class="my-3">
+                 {% if err %}
+                 <div class="alert alert-danger">{{ err | safe}}</div>
+                 {% endif %}
+                 {% if warn %}
+                 <div class="alert alert-warning">{{ warn | safe}}</div>
+                 {% endif %}
+             </div>
+             {% endif %}
+ 
+             <div id="contents">
+                 <div class="mt-5 mb-3 pb-3 border-bottom"><h1>{% block page_title %}ASKCOS{% endblock %}</h1></div>
+                 {% block page_body %}Looks like there is nothing here!{% endblock %}
+             </div>
+ 
+         </div>
+         </main>
+        </div>
+    </div>
 
     <footer class="footer" style="background-color: #0547AF !important;color: #FFFFFF">
         <div class="container">
@@ -312,8 +268,23 @@ $(document).ajaxStart(function() {
 }).ajaxStop(function() {
     $(document.body).css({'cursor' : 'default'});
 });
+
+// highlight nav-item by current-route
+function keepCurrentNav() {
+    var currentRoute = window.location.pathname + window.location.search;
+    console.log('currentRoute', currentRoute);
+    $('.sidebar .nav .nav-item').each(function(i, navItem){
+        console.log(navItem.dataset.route)
+        var isCurrent = navItem.dataset.route == currentRoute
+        $(navItem).toggleClass('active', isCurrent)
+        $(navItem).toggleClass('bg-primary', isCurrent)
+        $(navItem.querySelector('.nav-link')).toggleClass('text-white', isCurrent)
+    })
+}
+
 $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
+  keepCurrentNav();
 });
 
 // Toggle navbar dropdowns on mouse hover
