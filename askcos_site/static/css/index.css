@@ -5,3 +5,7 @@ html {
 .collapsed .fa-chevron-up {
     transform: rotate(180deg);
 }
+
+.nav.sub-menu {
+    margin-left: 20px;
+}
