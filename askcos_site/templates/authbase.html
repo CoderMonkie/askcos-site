@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}化智创新{% endblock %}</title>
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/fontawesome.min.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Our CSS (overrides) -->
+    <link href="{% static 'css/index.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/default.css' %}?v{{ static_version }}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'js/default.js' %}?v{{ static_version }}"></script>
+    <script src="{% static 'js/dayjs.min.js' %}"></script>
+    <!-- Javascript drawing -->
+    <script src="{% static 'jsme/jsme/jsme.nocache.js' %}"></script>
+
+    <style>
+        body {
+            background: no-repeat left/100% url('/static/images/login_bg_image.jpg') ;
+        }
+    </style>
+    {% block extrahead %}{% endblock %}
+</head>
+<body class="h-100 w-100">
+    <div id="document" class="h-100 w-100">
+        <!-- <img src="{% static 'images/login_bg_image.jpg' %}" style="width: 100%;height:100%;"> -->
+        <img src="/static/images/login_bg_image.jpg" class="w-100 h-100" style="position: absolute;top: 0;left:0;z-index:-999">
+        <img src="/static/images/logo.png" style="width: 3%;margin-left: 45px;vertical-align:bottom;">
+
+
+        <div id="contents">
+            <div class="mt-5 mb-3 pb-3 border-bottom">
+                <h1>{% block page_title %}ASKCOS{% endblock %}</h1>
+            </div>
+            {% block page_body %}Looks like there is nothing here!{% endblock %}
+        </div>
+
+    </div>
+</body>
+</html>

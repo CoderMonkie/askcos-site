@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "authbase.html" %}
 {% load i18n %}
 
 {% block page_title %}登录{% endblock %}
@@ -6,12 +6,12 @@
 {% block page_body %}
 
 <div class="w-100 d-flex justify-content-center">
-    <div>
+    <div class="" style="background:rgba(255,255,255,0.5);padding: 50px;border-radius:20px">
         <form method="post" action=".">
           {% csrf_token %}
           {{ form.as_p }}
 
-          <input type="submit" value="{% trans '登录' %}" />
+          <button type="submit" class="btn btn-primary" >{% trans '登录' %}</button>
           <input type="hidden" name="next" value="{{ next }}" />
         </form>
 
